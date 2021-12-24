@@ -16,7 +16,17 @@ In essence, you take the following steps:
    - Open "Software & Updates" 
    - Click Addiontal Drivers
    - Enable the Broadcom blabla
-7. [Re-install Firefox](https://askubuntu.com/questions/1058130/why-does-firefox-freeze-and-stop-my-computer)
+
+
+For some reason, the Nvidia 340 driver won't install properly, and FireFox is also not working properly. Install Google Chrome instead: 
+
+1. sudo apt update
+2. wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+3. sudo dpkg -i google-chrome-stable_current_amd64.deb
+
+Remove Firefox: 
+
+* sudo apt remove firefox
 
 ## Links
 
