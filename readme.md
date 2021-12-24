@@ -1,6 +1,6 @@
 # Installing Ubuntu on an old MacBook Pro 
 
-This is a little guide for myself how to install Ubuntu on my old 2009 MacBook Pro (5.5). 
+This is a little guide for myself how to install Ubuntu on my old 2009 MacBook Pro (5.5). I figured I'd give it a try, since the MacBook has become quite slow, and can only go to unsupported versions of macOS. Having a Linux machine might come in handy every now and then - especially for working on open-source projects or hack-the-box projects.
 
 ## Overview
 
