@@ -31,3 +31,5 @@ Remove Firefox:
 ## Links
 
 * [LifeWire tutorial](https://www.lifewire.com/dual-boot-linux-and-mac-os-4125733)
+* [Install Docker Engine](https://docs.docker.com/engine/install/ubuntu/)
+* [Terminal tutorial](https://ubuntu.com/tutorials/command-line-for-beginners)
