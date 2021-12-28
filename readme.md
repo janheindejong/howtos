@@ -2,7 +2,7 @@
 
 This is a little guide for myself how to install Ubuntu on my old 2009 MacBook Pro (5.5). I figured I'd give it a try, since the MacBook has become quite slow, and can only go to unsupported versions of macOS. Having a Linux machine might come in handy every now and then - especially for working on open-source projects or hack-the-box projects.
 
-## Overview
+## Setup OS & drivers
 
 In essence, you take the following steps: 
 
@@ -30,8 +30,17 @@ sudo dpkg -i google-chrome-stable_current_amd64.deb
 sudo apt remove firefox
 ```
 
+## Install Docker engine
+
+* [Install Docker Engine](https://docs.docker.com/engine/install/ubuntu/)
+
+## Install Git 
+
+* Install git: `sudo apt install git` 
+* Install git credential manager: https://github.com/GitCredentialManager/git-credential-manager
+* Set git credential manager to use GUI: `git config --global credential.credentialStore secretservice`
+
 ## Links
 
 * [LifeWire tutorial](https://www.lifewire.com/dual-boot-linux-and-mac-os-4125733)
-* [Install Docker Engine](https://docs.docker.com/engine/install/ubuntu/)
 * [Terminal tutorial](https://ubuntu.com/tutorials/command-line-for-beginners)
