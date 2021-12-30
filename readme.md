@@ -40,6 +40,15 @@ sudo apt remove firefox
 * Install git credential manager: https://github.com/GitCredentialManager/git-credential-manager
 * Set git credential manager to use GUI: `git config --global credential.credentialStore secretservice`
 
+## PlantUML in VSCode
+
+* Install the PlantUML extension 
+* Install Java and Graphviz: `sudo apt install default-jre graphviz`
+* Configure VSCode: `"plantuml.server": "https://plantuml.com/plantuml"`
+
+The latter just acts as a prefix for the generation of URLs.
+
+
 ## Links
 
 * [LifeWire tutorial](https://www.lifewire.com/dual-boot-linux-and-mac-os-4125733)
