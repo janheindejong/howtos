@@ -48,6 +48,9 @@ sudo apt remove firefox
 
 The latter just acts as a prefix for the generation of URLs.
 
+# Howdy - facial recogniation for log-in 
+
+You can use Howdy as the de facto Linux alternative to Windows Hello for facial recognition for logging on. See [this tutorial](https://itsfoss.com/face-unlock-ubuntu/). On my Dell XPS, the correct video device was `/dev/video2` - this is the IR camera. 
 
 ## Links
 
