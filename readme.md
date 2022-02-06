@@ -36,6 +36,8 @@ sudo apt remove firefox
 
 ## Install Git 
 
+Git credential manager is one of the two ways suggested by GitHub to cache credentials, and allow for 2FA authentication.
+
 * Install git: `sudo apt install git` 
 * Install git credential manager: https://github.com/GitCredentialManager/git-credential-manager
 * Set git credential manager to use GUI: `git config --global credential.credentialStore secretservice`
