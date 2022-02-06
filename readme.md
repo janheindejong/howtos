@@ -44,11 +44,10 @@ Git credential manager is one of the two ways suggested by GitHub to cache crede
 
 ## PlantUML in VSCode
 
-* Install the PlantUML extension 
-* Install Java and Graphviz: `sudo apt install default-jre graphviz`
-* Configure VSCode: `"plantuml.server": "https://plantuml.com/plantuml"`
+After installing the PlantUML extension in VSCode, there are two ways to setup it up: with local rendering, or server-side rendering. 
 
-The latter just acts as a prefix for the generation of URLs.
+* Serverside rendering -> add the following to the VSCode settings: `"plantuml.server": "https://plantuml.com/plantuml", "plantuml.render": "PlantUMLServer"`
+* Local rendering -> install Java and Graphvix: `sudo apt install default-jre graphviz`
 
 # Howdy - facial recogniation for log-in 
 
