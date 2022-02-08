@@ -53,6 +53,19 @@ After installing the PlantUML extension in VSCode, there are two ways to setup i
 
 You can use Howdy as the de facto Linux alternative to Windows Hello for facial recognition for logging on. See [this tutorial](https://itsfoss.com/face-unlock-ubuntu/). On my Dell XPS, the correct video device was `/dev/video2` - this is the IR camera. 
 
+## Fixing bluetooth connection issues 
+
+I had some issues with connecting bluetooth devices; the trick was to re-install `bluez`. 
+
+On second thought, this did not fix it... 
+
+I did got a bit further in debugging a mouse lag issue, where the mouse would freeze for half a second after several seconds of inactivity. This is some powersaving feature, and it can be addressed as followes: 
+
+```bash
+sudo apt install powertop
+powertop -> go to tunables, toggle unknown USB device to "BAD" 
+``` 
+
 ## Links
 
 * [LifeWire tutorial](https://www.lifewire.com/dual-boot-linux-and-mac-os-4125733)
