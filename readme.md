@@ -66,6 +66,32 @@ sudo apt install powertop
 powertop -> go to tunables, toggle unknown USB device to "BAD" 
 ``` 
 
+This article seems to cover it quite well: https://hamwaves.com/usb.autosuspend/en/
+
+Ok... I've learned some more. Apparantly, all "bus" type devices have autosuspend enable by default, and all other devices not. Since I don't have a specific driver for my Logitech Master MX3, it is listed as a typical bluetooth device, and apparently the bluetooth receiver from Foxconn has some standard functionality for bluetooth mice. There is an unofficial driver for logitech, see [here](https://danishshakeel.me/configure-logitech-mx-master-3-on-linux-logiops/)
+
+Finally got it. I need to add add a udev role that either sets the power/control attribute to on, or the power/autosuspend attribute to -1: 
+
+```
+# Disable autosuspend for bluetooth mouse 
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0489", ATTR{idProduct}=="e0a2", ATTR{power/control}="on"
+
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="0489", ATTR{idProduct}=="e0a2", ATTR{power/autosuspend}="-1"
+```
+
+
+## Fixing bluetooth headphone issues 
+
+This is a really annoying one. I've tried: 
+
+- Reading on PulseAudio: https://wiki.debian.org/BluetoothUser/a2dp 
+- Managing bluetooth devices with bluetoothctl: https://www.makeuseof.com/manage-bluetooth-linux-with-bluetoothctl/
+- Changing latency of pulseaudio: https://askubuntu.com/questions/475987/a2dp-on-pulseaudio-terrible-choppy-skipping-audio
+- Disabling tsched: https://askubuntu.com/questions/371595/for-pulseaudio-what-does-tsched-do-and-what-are-the-defaults
+
+
+
+
 ## Links
 
 * [LifeWire tutorial](https://www.lifewire.com/dual-boot-linux-and-mac-os-4125733)
