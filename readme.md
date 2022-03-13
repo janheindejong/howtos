@@ -90,6 +90,15 @@ This is a really annoying one. I've tried:
 - Disabling tsched: https://askubuntu.com/questions/371595/for-pulseaudio-what-does-tsched-do-and-what-are-the-defaults
 
 
+## Setting Keychron Fn functions to default
+
+Had some difficulty setting up my Keychron keyboard to use the Fn keys by default, not the multimedia keys. Found the solution [here](https://mikeshade.com/posts/keychron-linux-function-keys/):
+
+- Set to keyboard to windows mode 
+- Switch Function mode by holding Fn+X+L
+- Switch modes: `echo 0 | sudo tee /sys/module/hid_apple/parameters/fnmode`
+- Make persisten by running `echo "options hid_apple fnmode=0" | sudo tee -a /etc/modprobe.d/hid_apple.conf`
+- If necessary, run sudo update-initramfs -u
 
 
 ## Links
