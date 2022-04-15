@@ -100,6 +100,9 @@ Had some difficulty setting up my Keychron keyboard to use the Fn keys by defaul
 - Make persisten by running `echo "options hid_apple fnmode=0" | sudo tee -a /etc/modprobe.d/hid_apple.conf`
 - If necessary, run sudo update-initramfs -u
 
+## Installing Oracle Virtual Box
+
+Installing Oracle Virtual Box can be done just through the standard Ubuntu repository: `sudo apt install virtualbox`. In the BIOS, I had to disable UEFI secure boot. There are ways that you can make this work with secure boot, but I didn't dive into them.
 
 ## Links
 
