@@ -4,6 +4,8 @@
 
 Installing virtualbox can be done through default repository: `sudo apt get virtualbox`.
 
+In the BIOS, I had to disable UEFI secure boot. There are ways that you can make this work with secure boot, but I didn't dive into them.
+
 ## Getting networking to work 
 
 For some reason, CentOS 7.9 doesn't automatically connect the network adapter. To do so, run `dhclient`, to contact the DHCP server, and set the network configuration. To make sure it connects on startup, run: 
