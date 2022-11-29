@@ -6,7 +6,7 @@ This How-To describes how to setup my development Windows development machine.
 
 I install most stuff through Chocolatey. Follow the official instructions to install it. 
 
-## VIM 
+## ViM 
 
 I like to use Vim as editor.
 
