@@ -46,9 +46,15 @@ kubectl completion powershell | Out-Null | Invoke-Expression
 Next, we can start minikube, and enable some addons: 
 
 ```powershell 
-minikube start 
+minikube start --driver=hyperv 
 minikube addons enable ingress
 minikube addons enable metrics-server
+```
+
+To be able to access the cluster, it's useful to setup a local DNS record, in `C:\windows\system32\drivers\etc\hosts` pointing to the cluster ip (`minikube ip`), e.g.: 
+
+```
+192.168.178.118 cluster.minikube.internal
 ```
 
 ## Oh-my-posh & posh-git
@@ -88,6 +94,6 @@ oh-my-posh init pwsh | Invoke-Expression
 There's many many themes for it, but I like stelbent-compact.minimal: 
 
 ```powershell 
-oh-my-posh init pwsh --config $env:POSH_THEMES_PATH\stelbent-compact.minimal | Invoke-Expression
+oh-my-posh init pwsh --config $env:POSH_THEMES_PATH\stelbent-compact.minimal.omp.json | Invoke-Expression
 ```
 
