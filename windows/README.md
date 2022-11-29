@@ -28,6 +28,10 @@ set undodir=C:\temp
 set backupdir=C:\temp
 ```
 
+## Enable Hyper-V non-admin access
+
+Open Computer Management; go to System Tools > Local Users and Groups > Groups > Hyper-V admins. Add the user. Done. 
+
 ## Kubernetes
 
 To install minikube and kubectl on Windows, it's easiest to use Chocolatey. 
