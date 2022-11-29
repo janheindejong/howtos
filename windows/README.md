@@ -57,6 +57,14 @@ To be able to access the cluster, it's useful to setup a local DNS record, in `C
 192.168.178.118 cluster.minikube.internal
 ```
 
+Install helm: 
+
+```powershell 
+choco install helm
+``` 
+
+https://logz.io/blog/deploying-the-elk-stack-on-kubernetes-with-helm/
+
 ## Oh-my-posh & posh-git
 
 Posh-git and oh-my-posh are nice additions: 
