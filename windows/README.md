@@ -40,7 +40,7 @@ choco install minikube
 Next, it's nice to add autocompletion to kubectl. For this, add this line to `$PROFILE`: 
 
 ```powershell
-kubectl completion powershell | Out-Null | Invoke-Expression
+kubectl completion powershell | Out-String | Invoke-Expression
 ```
 
 Next, we can start minikube, and enable some addons: 
