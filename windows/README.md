@@ -39,6 +39,7 @@ To install minikube and kubectl on Windows, it's easiest to use Chocolatey.
 ```powershell 
 choco install kubectl 
 choco install minikube
+choco install k9s
 ```
 
 Next, it's nice to add autocompletion to kubectl. For this, add this line to `$PROFILE`: 
