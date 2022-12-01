@@ -102,6 +102,7 @@ Add the following lines to `$PROFILE`:
 ```powershell
 Import-Module posh-git
 oh-my-posh init pwsh | Invoke-Expression
+$env:POSH_GIT_ENABLED = $true
 ```
 
 There's many many themes for it, but I like stelbent-compact.minimal: 
