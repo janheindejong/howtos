@@ -4,14 +4,14 @@ This How-To describes how to setup my development Windows development machine.
 
 ## Chocolatey 
 
-I install most stuff through Chocolatey. Follow the official instructions to install it. 
+I install most stuff through Chocolatey or Scoop. Follow the official instructions to install them. 
 
 ## ViM 
 
 I like to use Vim as editor.
 
 ```powershell 
-choco install vim 
+scoop install vim 
 ```
 
 By default, vim writes annoying temp files next to the files you are editing. You can configure it to save these files to a central location. Open vim, and run: 
@@ -19,6 +19,9 @@ By default, vim writes annoying temp files next to the files you are editing. Yo
 ```vim 
 :e $MYVIMRC
 ```
+
+You might have to create a file `$HOME\_vimrc`.
+
 
 Add the following lines: 
 
@@ -76,8 +79,8 @@ Posh-git and oh-my-posh are nice additions:
 
 ```powershell 
 PowerShellGet\Install-Module posh-git -Scope CurrentUser -Force
-winget upgrade JanDeDobbeleer.OhMyPosh -s winget
-oh-my-posh install font # Choose Mesmo
+scoop install https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json
+oh-my-posh font install # Choose Meslo
 ```
 
 Set terminal to use nerdfont: 
