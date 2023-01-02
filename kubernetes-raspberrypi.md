@@ -20,13 +20,16 @@ You should now be able to login to the raspberry pi through `ssh username@raspbe
 
 To be safe, it's usually a good idea to change the SSH default port. Typically, the SSH daemon service is configured by modifying `/etc/ssh/sshd_config`, but the latest version of Ubuntu uses a socket system, that triggers the start of the service once a request comes in. To set the port, modify ` /etc/systemd/system/ssh.socket.d/listen.conf`: 
 
-``` 
+```
+mkdir /etc/systemd/system/ssh.socket.d 
 cat > /etc/systemd/system/ssh.socket.d/listen.conf <<EOF
 [Socket]
 ListenStream=
 ListenStream=12345
 EOF
 ```
+
+Reboot for this change to take effect.
 
 ## Setting up Kubernetes 
 
@@ -35,16 +38,19 @@ Next, we'll install Kubernetes. There's several options out the (Minikube, micro
 Install k3s: 
 
 ```
-curl -sfL https://get.k3s.io | sh -`
-sudo apt install linux-modules-extra-raspi
+apt install linux-modules-extra-raspi
+curl -sfL https://get.k3s.io | sh -
 ```   
 
 Configure kubectl: 
 
 ```
-cat >> ~/.profile <<EOF 
 export KUBECONFIG="$HOME/.kube/config"
+cat >> ~/.profile <<EOF 
+export KUBECONFIG="$KUBECONFIG"
 EOF
-cat /etc/rancher/k3s/k3s.yaml > "$HOME/.kube/config" 
+mkdir ~/.kube 2> /dev/null
+sudo k3s kubectl config view --raw > "$KUBECONFIG"
+chmod 600 "$KUBECONFIG"
 ```
 
