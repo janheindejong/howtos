@@ -79,4 +79,3 @@ Make sure you add `example-app.home` to your `C:\windows\System32\drivers\etc\ho
 ``` 
 Invoke-WebRequest -Uri http://example-app.home
 ```
-
