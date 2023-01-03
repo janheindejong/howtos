@@ -12,8 +12,9 @@ The Pi runs an image that is loaded onto an SSD card. Raspberry Pi has images so
  
 * Select the OS; be sure to select Ubuntu server, not desktop
 * Click on the "cog", and change the default settings
-    * Choose a hostname, username and password
     * Disable password login, and enable SSH keypair login; use the public part of the keypair you just created 
+    * Choose a hostname, username and password; you can leave these to the defaults, this will mean you can login using `pi@raspberrypi.local`. The `pi` user will have `NOPASSWD` set in `/etc/sudoers.d/90-cloud-init-users`, that will allow you to do root work without a password. 
+    * Set the Wifi settings
 * Create the image 
 
 You should now be able to login to the raspberry pi through `ssh username@raspberrypi.local`. I've had some issues with mDNS on Windows, running `dns-sd.exe -G v4 <hostname>.local` fixed it. Don't know why... 
@@ -38,6 +39,7 @@ Next, we'll install Kubernetes. There's several options out the (Minikube, micro
 Install k3s: 
 
 ```
+apt update
 apt install linux-modules-extra-raspi
 curl -sfL https://get.k3s.io | sh -
 ```   
@@ -52,5 +54,102 @@ EOF
 mkdir ~/.kube 2> /dev/null
 sudo k3s kubectl config view --raw > "$KUBECONFIG"
 chmod 600 "$KUBECONFIG"
+```
+
+## Setup k9s
+
+```
+curl -OL https://github.com/derailed/k9s/releases/download/v0.26.7/k9s_Linux_arm64.tar.gz
+tar -xf k9s_Linux_arm64.tar.gz
+mkdir ~/bin 
+mv k9s ~/bin/k9s
+```
+
+You'll need to restart 
+
+## Deploy a Hello, World app 
+
+Create a Kubernetes manifest: 
+
+``` 
+cat > example-app.yml <<EOF 
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: example-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-app
+  namespace: example-app
+  labels:
+    app: example-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: example-app
+  template:
+    metadata:
+      labels:
+        app: example-app
+    spec:
+      containers:
+      - name: example-app
+        image: nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: example-app-volume
+      initContainers:
+      - name: example-app-init
+        image: busybox
+        command: ['sh', '-c', 'echo "Hello, world!" > /usr/share/nginx/html/index.html']
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: example-app-volume
+      volumes:
+      - name: example-app-volume
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: example-app
+  namespace: example-app
+spec:
+  type: ClusterIP
+  selector:
+    app: example-app
+  ports:
+    - protocol: TCP
+      port: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example-app
+  namespace: example-app
+spec:
+  rules:
+  - host: example-app.home
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: example-app
+              port:
+                number: 80
+EOF
+kubectl apply -f example-app.yml
+```
+
+Make sure you add `example-app.home` to your `C:\windows\System32\drivers\etc\hosts` on your client machine. 
+
+``` 
+Invoke-WebRequest -Uri http://example-app.home
 ```
 
