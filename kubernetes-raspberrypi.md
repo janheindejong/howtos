@@ -65,86 +65,13 @@ mkdir ~/bin
 mv k9s ~/bin/k9s
 ```
 
-You'll need to restart 
+You'll need to restart.
 
 ## Deploy a Hello, World app 
 
-Create a Kubernetes manifest: 
-
-``` 
-cat > example-app.yml <<EOF 
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: example-app
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: example-app
-  namespace: example-app
-  labels:
-    app: example-app
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: example-app
-  template:
-    metadata:
-      labels:
-        app: example-app
-    spec:
-      containers:
-      - name: example-app
-        image: nginx
-        ports:
-        - containerPort: 80
-        volumeMounts:
-        - mountPath: /usr/share/nginx/html
-          name: example-app-volume
-      initContainers:
-      - name: example-app-init
-        image: busybox
-        command: ['sh', '-c', 'echo "Hello, world!" > /usr/share/nginx/html/index.html']
-        volumeMounts:
-        - mountPath: /usr/share/nginx/html
-          name: example-app-volume
-      volumes:
-      - name: example-app-volume
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: example-app
-  namespace: example-app
-spec:
-  type: ClusterIP
-  selector:
-    app: example-app
-  ports:
-    - protocol: TCP
-      port: 80
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: example-app
-  namespace: example-app
-spec:
-  rules:
-  - host: example-app.home
-    http:
-      paths:
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: example-app
-              port:
-                number: 80
-EOF
-kubectl apply -f example-app.yml
+Launch the app from the k8s manifest: 
+```
+kubectl apply -f manifests/example-app.yaml
 ```
 
 Make sure you add `example-app.home` to your `C:\windows\System32\drivers\etc\hosts` on your client machine. 
