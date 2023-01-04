@@ -118,7 +118,7 @@ metadata:
   namespace: home-assistant
 spec:
   rules:
-  - host: janhein.duckdns.org
+  - host: home-assistant.janhein.duckdns.org
     http:
       paths:
         - path: /
