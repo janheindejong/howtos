@@ -17,7 +17,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   local:
-    path: /home/janhein/home-assistant-config
+    path: /home/home-assistant
   claimRef:
     name: home-assistant-pvc
     namespace: home-assistant
@@ -73,10 +73,10 @@ spec:
         resources:
           limits:
             cpu: "1"
-            memory: 500Mi
+            memory: 1Gi
           requests:
             cpu: 500m
-            memory: 1Gi
+            memory: 500Mi
       volumes:
       - name: home-assistant
         persistentVolumeClaim:
