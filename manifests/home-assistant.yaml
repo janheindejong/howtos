@@ -28,11 +28,11 @@ spec:
         - containerPort: 1400
         volumeMounts:
         - mountPath: /config
-          name: home-assistant-config
+          name: home-assistant
       volumes:
-      - name: home-assistant-config
+      - name: home-assistant
         hostPath:
-          path: /home/janhein/home-assistant-config
+          path: /home/janhein/home-assistant
 ---
 apiVersion: v1
 kind: Service

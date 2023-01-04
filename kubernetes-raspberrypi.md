@@ -1,6 +1,5 @@
 # Installing Kubernetes on my Raspberry Pi 
 
-
 ## Setting up the Pi 
 
 To identify ourselves for SSH, we can use an SSH key-pair. If you don't already have one, you can create one: 
@@ -17,7 +16,7 @@ The Pi runs an image that is loaded onto an SSD card. Raspberry Pi has images so
     * Set the Wifi settings
 * Create the image 
 
-You should now be able to login to the raspberry pi through `ssh username@raspberrypi.local`. I've had some issues with mDNS on Windows, running `dns-sd.exe -G v4 <hostname>.local` fixed it. Don't know why... 
+You should now be able to login to the pi through `ssh pi@raspberrypi.local`. I've had some issues with mDNS on Windows, running `dns-sd.exe -G v4 raspberrypi.local` fixed it. Don't know why... 
 
 To be safe, it's usually a good idea to change the SSH default port. Typically, the SSH daemon service is configured by modifying `/etc/ssh/sshd_config`, but the latest version of Ubuntu uses a socket system, that triggers the start of the service once a request comes in. To set the port, modify ` /etc/systemd/system/ssh.socket.d/listen.conf`: 
 
@@ -30,25 +29,25 @@ ListenStream=12345
 EOF
 ```
 
-Reboot for this change to take effect.
+Reboot for this change to take effect, and reconnect using `ssh pi@raspberrypi.local -p 12345`.
 
 ## Setting up Kubernetes 
 
-Next, we'll install Kubernetes. There's several options out the (Minikube, microk8s), but we'll use k3s. This is an [interesting article](https://anthonynsimon.com/blog/kubernetes-cluster-raspberry-pi/). 
+Next, we'll install Kubernetes. There's several options out there, but we'll use K3s. It comes with the most basic utilities, including kubectl, coreDNS, Traefik load balancer, Traefik ingress controller, and Rancher local path provisioner.
 
-Install k3s: 
+Install K3s:
 
 ```
-apt update
-apt install linux-modules-extra-raspi
+sudo apt update
+sudo apt install linux-modules-extra-raspi
 curl -sfL https://get.k3s.io | sh -
-```   
+```
 
-Configure kubectl: 
+Configure kubectl:
 
 ```
 export KUBECONFIG="$HOME/.kube/config"
-cat >> ~/.profile <<EOF 
+cat >> ~/.profile <<EOF
 export KUBECONFIG="$KUBECONFIG"
 EOF
 mkdir ~/.kube 2> /dev/null
@@ -58,24 +57,28 @@ chmod 600 "$KUBECONFIG"
 
 ## Setup k9s
 
+K9s - pronounced canines, like the dawgs - is a nice terminal based management tool for K8s. I install it by downloading the binary from Github. 
+
 ```
 curl -OL https://github.com/derailed/k9s/releases/download/v0.26.7/k9s_Linux_arm64.tar.gz
 tar -xf k9s_Linux_arm64.tar.gz
-mkdir ~/bin 
-mv k9s ~/bin/k9s
+sudo mv k9s /usr/local/bin
 ```
 
-You'll need to restart.
+It was a bit tricky to find where to put everything under Linux, but I found this flowchart very helpfull. 
 
-## Deploy a Hello, World app 
+![](./images/linux-filesystem.png)
 
-Launch the app from the k8s manifest: 
+## Deploy a Hello, World app
+
+Launch the app from the K8s [manifest](./manifests/exampe-app.yaml):
+
 ```
 kubectl apply -f manifests/example-app.yaml
 ```
 
-Make sure you add `example-app.home` to your `C:\windows\System32\drivers\etc\hosts` on your client machine. 
+Wait for it to start, and access it: 
 
 ``` 
-Invoke-WebRequest -Uri http://example-app.home
+curl http://localhost:8080
 ```
