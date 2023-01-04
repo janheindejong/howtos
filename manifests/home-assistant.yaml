@@ -70,6 +70,13 @@ spec:
         volumeMounts:
         - mountPath: /config
           name: home-assistant
+        resources:
+          limits:
+            cpu: "1"
+            memory: 500Mi
+          requests:
+            cpu: 500m
+            memory: 1Gi
       volumes:
       - name: home-assistant
         persistentVolumeClaim:
