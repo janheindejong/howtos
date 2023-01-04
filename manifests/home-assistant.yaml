@@ -3,6 +3,47 @@ kind: Namespace
 metadata:
   name: home-assistant
 ---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: home-assistant-pv
+  namespace: home-assistant
+spec:
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  local:
+    path: /home/janhein/home-assistant-config
+  claimRef:
+    name: home-assistant-pvc
+    namespace: home-assistant
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - raspberrypi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: home-assistant-pvc
+  namespace: home-assistant
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: ""
+  volumeName: home-assistant-pv
+  resources:
+    requests:
+      storage: 10Gi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -31,8 +72,8 @@ spec:
           name: home-assistant
       volumes:
       - name: home-assistant
-        hostPath:
-          path: /home/janhein/home-assistant
+        persistentVolumeClaim:
+          claimName: home-assistant-pvc 
 ---
 apiVersion: v1
 kind: Service
