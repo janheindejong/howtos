@@ -63,10 +63,8 @@ spec:
       - name: home-assistant
         image: homeassistant/home-assistant:latest
         ports:
-        # For accessing Home Assistant
-        - containerPort: 8123
-        # For Sonos
-        - containerPort: 1400
+        - containerPort: 8123  # For accessing Home Assistant
+        - containerPort: 1400  # For Sonos
         volumeMounts:
         - mountPath: /config
           name: home-assistant
@@ -98,6 +96,8 @@ spec:
     - port: 1400
       targetPort: 1400
       name: sonos
+
+# Everything below here we can remove if we don't intend to use ingress anymore
 ---
 apiVersion: v1
 kind: Service

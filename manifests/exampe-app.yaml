@@ -28,6 +28,13 @@ spec:
         volumeMounts:
         - mountPath: /usr/share/nginx/html
           name: example-app-volume
+        resources:
+          limits:
+            cpu: 200m
+            memory: 100Mi
+          requests:
+            cpu: 200m
+            memory: 100Mi
       initContainers:
       - name: example-app-init
         image: busybox
