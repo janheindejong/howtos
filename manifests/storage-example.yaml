@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: storage-example
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: storage-example-pv
+  namespace: storage-example
+spec:
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  local:
+    path: /home/storage-example/data
+  claimRef:
+    name: storage-example-pvc
+    namespace: storage-example
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - raspberrypi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: storage-example-pvc
+  namespace: storage-example
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: ""
+  volumeName: storage-example-pv
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: storage-example-job
+  namespace: storage-example
+spec:
+  template:
+    spec:
+      volumes:
+      - name: data-vol
+        persistentVolumeClaim:
+          claimName: storage-example-pvc
+      containers:
+      - name: storage-example-job
+        image: busybox
+        command: ['sh', '-c', 'echo "Hello, world!" >> /data/data.txt']
+        volumeMounts:
+        - mountPath: "/data"
+          name: data-vol
+      restartPolicy: Never

@@ -82,3 +82,14 @@ Wait for it to start, and access it:
 ``` 
 curl http://localhost:8080
 ```
+
+## Configuring storage 
+
+I wanted to mount some storage, that I can also access easily from the host, to see how volumes work in Kubernetes. I've created an example of using a statically created PV mounted to a pre-configured directory on the host. To run it, do: 
+
+``` 
+sudo mkdir -p /home/storage-example/data
+kubectl apply -f manifests/storage-example.yaml
+```
+
+Once the configured job ran, you'll see a file at `/home/storage-example/data/data.txt` that contains a hello world. 
