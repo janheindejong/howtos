@@ -6,3 +6,4 @@ This is just my collection of how-to descriptions, so I don't forget them.
 * [Kubernetes on Raspberry Pi](./K8s-on-raspberrypi.md) - Installing k8s on my Raspberry Pi 
 * [Home Assistant](./home-assistant-on-K8s.md) - Deploying Home Assistant on k8s
 * [Ubuntu on MacBook](./ubuntu-on-macbook.md) - Installing Ubuntu on my 2009 MacBook Pro
+* [Spark & Jupyter Lab on Docker](./spark.md) - Running single node Apache Spark and Jupyter Lab on Docker

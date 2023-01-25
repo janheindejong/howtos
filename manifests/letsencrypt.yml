@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: letsencrypt
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: letsencrypt
+  namespace: letsencrypt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: letsencrypt
+  template:
+    metadata:
+      labels:
+        app: letsencrypt
+    spec:
+      containers:
+      - name: letsencrypt
+        image: maksimstojkovic/docker-letsencrypt
+        env:
+        - name: DUCKDNS_TOKEN
+          value: 1d740f18-b6ca-4149-8a36-239bcdcc268e
+        - name: DUCKDNS_DOMAIN
+          value: janhein.duckdns.org
+        - name: LETSENCRYPT_WILDCARD
+          value: "true"
+        volumeMounts:
+        - mountPath: /etc/letsencrypt
+          name: certs
+        resources:
+          limits:
+            cpu: 200m
+            memory: 100Mi
+          requests:
+            cpu: 100mm
+            memory: 100Mi
+      volumes:
+      - name: certs
+        hostPath:
+          path: /home/janhein/certs
