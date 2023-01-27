@@ -93,3 +93,14 @@ kubectl apply -f manifests/storage-example.yaml
 ```
 
 Once the configured job ran, you'll see a file at `/home/storage-example/data/data.txt` that contains a hello world. 
+
+## Rebooting 
+
+I've had some issues with the cluster coming back online after a loss of power to the Pi. K3s was started, but the embedded CNI plugin (Flannel) give some issues with corrupted JSON files, leading to pods not starting properly. 
+
+```bash 
+/usr/local/bin/k3s-killall.sh
+sudo systemctl start k3s 
+```
+
+This kills containerd and k3s, and removes all the CNI files. Your cluster state will still be backed-up in the embedded SQLite database, located at `/var/lib/rancher/k3s/server/db`.
