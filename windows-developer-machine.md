@@ -31,6 +31,17 @@ set undodir=C:\temp
 set backupdir=C:\temp
 ```
 
+## Git 
+
+I install Git via Scoop. 
+
+```powershell
+scoop install git 
+git config --global credential.store=manager 
+git config --global credential.helper=manager
+```
+
+
 ## Enable Hyper-V non-admin access
 
 Open Computer Management; go to System Tools > Local Users and Groups > Groups > Hyper-V admins. Add the user. Done. 
@@ -119,7 +130,6 @@ oh-my-posh init pwsh --config $env:POSH_THEMES_PATH\stelbent-compact.minimal.omp
 1. Download and install Python from `python.org` 
 2. Install pipx: `python.exe pip install pipx`
 3. Update path variables: `pipx ensurepath`
-4. Install additional tooling: 
-    - `pipx install poetry`
-    - `pipx install black` 
+4. Install additional tooling: `pipx install poetry black autoflake8 isort flake8 mypy`
+5. Configure poetry: `poetry config virtualenvs.in-project true`
 
