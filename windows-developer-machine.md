@@ -114,3 +114,12 @@ There's many many themes for it, but I like stelbent-compact.minimal:
 oh-my-posh init pwsh --config $env:POSH_THEMES_PATH\stelbent-compact.minimal.omp.json | Invoke-Expression
 ```
 
+### Python 
+
+1. Download and install Python from `python.org` 
+2. Install pipx: `python.exe pip install pipx`
+3. Update path variables: `pipx ensurepath`
+4. Install additional tooling: 
+    - `pipx install poetry`
+    - `pipx install black` 
+
