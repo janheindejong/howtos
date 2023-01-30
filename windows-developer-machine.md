@@ -125,11 +125,39 @@ There's many many themes for it, but I like stelbent-compact.minimal:
 oh-my-posh init pwsh --config $env:POSH_THEMES_PATH\stelbent-compact.minimal.omp.json | Invoke-Expression
 ```
 
-### Python 
+## Python 
 
-1. Download and install Python from `python.org` 
-2. Install pipx: `python.exe pip install pipx`
-3. Update path variables: `pipx ensurepath`
-4. Install additional tooling: `pipx install poetry black autoflake8 isort flake8 mypy`
-5. Configure poetry: `poetry config virtualenvs.in-project true`
+There's a million ways to setup your Python environment, but I like to go with a combination of Python, Pipx and Poetry as a basis. Any other tools I also install, but typically add them to the project dependencies as well. 
+
+First, download and install Python from `python.org`. Next, install pipx: 
+
+``` 
+python -m pip install pipx 
+pipx ensurepath 
+``` 
+
+Next, install and configure Poetry and `poethepoet`: 
+
+```
+pipx install poetry 
+poetry config virtualenvs.in-project true
+pipx install poethepoet
+```
+
+Install any additional tooling: 
+
+``` 
+pipx install autoflake8 
+pipx install flake8 
+pipx install isort 
+pipx install mypy 
+pipx install black
+pipx install pytest 
+```
+
+Again, I prefer installing these in the project environment as dev dependencies (since CI pipelines also need these tools), like so: 
+
+```powershell 
+poetry add -G dev autoflake8 flake8 isort mypy black pytest
+```
 
