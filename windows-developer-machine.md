@@ -30,6 +30,18 @@ set dir=C:\temp
 set undodir=C:\temp
 set backupdir=C:\temp
 set backspace=indent,eol,start
+let $LANG = 'en'
+
+
+# Python configuration 
+au BufNewFile,BufRead *.py set
+    \ tabstop=4
+    \ softtabstop=4
+    \ shiftwidth=4
+    \ textwidth=88
+    \ expandtab
+    \ autoindent
+    \ fileformat=unix
 ```
 
 ## Git 
