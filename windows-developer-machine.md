@@ -29,6 +29,7 @@ Add the following lines:
 set dir=C:\temp
 set undodir=C:\temp
 set backupdir=C:\temp
+set backspace=indent,eol,start
 ```
 
 ## Git 
@@ -141,7 +142,7 @@ Next, install and configure Poetry and `poethepoet`:
 ```
 pipx install poetry 
 poetry config virtualenvs.in-project true
-pipx install poethepoet
+poetry self add 'poethepoet[poetry_plugin]'
 ```
 
 Install any additional tooling: 
