@@ -2,23 +2,66 @@
 
 In this readme, I'll try to figure out how to run Spark locally, to play a bit with it. 
 
-## Simplest installation for running locally with PySpark 
+## Project installation
 
-1. Install a supported Java version, i.e. 8/11/17
-2. Add an environment variable JAVA_HOME and point it to the installation directory of Java, or add that directory to PATH. This allows Spark to find Java, and create and communicate with JVMs  
-3. Create a new virtual environment based of one of the supported Python versions: `py -3.10 venv .venv`
-4. Activate the environment `.venv\Scripts\activate`
-5. Install PySpark: `pip install pyspark`
-6. By default, PySpark goes looking for the command `python3`, which isn't automatically created on Windows... very annoying. So, we can either set do `$env:PYSPARK_PYTHON = "python"`, or create a simlink ` New-Item -ItemType SymbolicLink -Path .\.venv\Scripts\python3.exe -Target .\.venv\Scripts\python.exe`
-7. See if everything works, by running PySpark in interactive mode:
-  - `pyspark`
-  - `spark.range(1, 100).collect()`
+This is the simplest way; it allows you to run Spark programs locally, either through `spark-submit` or through an interactive shell (e.g. `pyspark` or `IPython`).
 
-Now, you have a fully working version of Spark, that you can use for local development, and for communicating with a cluster. Love it...
+1. Install supported Java Developer Kit (8/11/17) from Oracle downloads page
+    - Download installer from Oracle website, and run.
+    - Either add `JAVA_HOME=C:\Program Files\Java\jdk-17` to environment variables, or ensure Java is added to `PATH`. 
+2. Create new environment: 
+    - Create new env based off supported Python version `py -3.10 venv .venv`.
+    - Activate the environment `.venv\Scripts\activate`.
+3. Install and configure PySpark: 
+    - `pip install pyspark`; this install PySpark and a basic version of Spark
+    - By default, PySpark goes looking for the command `python3`, which isn't automatically created on Windows... very annoying. So, we can either set to `$env:PYSPARK_PYTHON = "python"`, or create a simlink ` New-Item -ItemType SymbolicLink -Path .\.venv\Scripts\python3.exe -Target .\.venv\Scripts\python.exe`.
+4. See if everything works, by running PySpark in interactive mode:
+    - `pyspark`
+    - `spark.range(1, 100).collect()`
 
-## Running on Docker 
+Now, you have a basic version of Spark, that you can use for local development, and for communicating with a cluster. Love it...
 
-Spark depends on the JVM, spark, and setting some environment vars. However, a faster way to play around is to use a Docker image provides by the Jupyter community. 
+## System-wide installation 
+
+Manual installation is a bit more elaborate, but allows for more control and functionality. 
+
+1. Install supported Java Developer Kit (8/11/17) from Oracle downloads page
+    - Download installer from Oracle website, and run 
+    - Add `JAVA_HOME=C:\Program Files\Java\jdk-17` to environment variables  
+2. Install Spark 
+    - Download Spark for Hadoop 2.7 from Spark website; for some reason Hadoop 2.7 is the bees knees. 
+    - Extract `tar -xvf spark-3.3.1-bin-hadoop2.tar.gz`
+    - Copy to nice location (e.g. `C:\Program Files\Spark\spark-3.3.1-bin-hadoop2`)
+    - Add `SPARK_HOME=C:\Program Files\Spark\spark-3.3.1-bin-hadoop2` to environment variables
+3. Setup Hadooop
+    - Download winutils for Hadoop 2.7, and copy to `%SPARK_HOME%\bin`
+    - Add `HADOOP_HOME=%SPARK_HOME%` to environment variables 
+4. See if everything works, by running PySpark in interactive mode:
+    - `%SPARK_HOME%\bin\pyspark`
+    - `spark.range(1, 100).collect()`
+
+You can now create a new virtual environment, and install PySpark there. It will be used for code inspection by your IDE, but due to the environment variables we've set, the configuration and JARs from your global installation will be used. 
+
+To configure Spark, create a file `%SPARK_HOME\conf\spark-defaults.conf` and add the following: 
+
+```
+spark.eventLog.enabled          true
+spark.history.fs.logDirectory   file:///c:/tmp/spark-events
+spark.eventLog.dir              file:///c:/tmp/spark-events
+spark.sql.shuffle.partitions    8
+```
+
+Create the spark events folder: `mkdir C:\tmp\spark-events`.
+
+You can now run Spark history server: 
+
+```powershell 
+& '$env:SPARK_HOME\bin\spark-class.cmd' org.apache.spark.deploy.history.HistoryServer  # Serves Spark logs at localhost:18080
+```
+
+## In Docker container 
+
+The Jupyter community provides a convenience container that has all batteries included. 
 
 ```powershell 
 docker volume create spark-vol  # Only if not existent
@@ -30,23 +73,13 @@ docker run -it --rm `
     jupyter/pyspark-notebook
 ```
 
-## Manual installation 
 
-Manual installation is a bit more elaborate. 
+## Devcontainer
 
-1. Install JDK 8, from the Oracle archive; for some reason, 8 is the business...
-    - Download and run the installer
-    - Change the install directory to something without weird characters; spark doesn't like it (e.g. `C:\java\jdk1.8.0_351`)
-2. Install Spark 
-    - Download Spark for Hadoop 2.7 from Spark website; for some reason Hadoop 2.7 is the bees knees. 
-    - Extract `tar -xvf spark-3.3.1-bin-hadoop2.tar.gz`
-    - Copy to nice location (e.g. `C:\Program Files\spark-3.3.1-bin-hadoop2`)
-3. Download winutils for Hadoop 2.7, and copy to `C:\Program Files\spark-3.3.1-bin-hadoop2\bin`
-4. Set environment variables
-    - `JAVA_HOME=C:\java\jdk1.8.0_351`
-    - `JAVA_PATH=C:\java\jdk1.8.0_351\bin`
-    - `SPARK_HOME=C:\Program Files\spark-3.3.1-bin-hadoop2`
-    - `HADOOP_HOME=C:\Program Files\spark-3.3.1-bin-hadoop2`
-5. Add the following to user scoped path variable: 
-    - `%SPARK_HOME%\bin`
-    - `JAVA_PATH`
+I've noticed that Spark on Windows is not really a match made in heaven. I think devcontainers could be solution, where we should: 
+
+1. Start with the Python devcontainer 
+2. Add Java 
+3. Add Spark 
+
+This might be nice... don't know. 
