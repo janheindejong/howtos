@@ -40,7 +40,7 @@ Manual installation is a bit more elaborate, but allows for more control and fun
     - `%SPARK_HOME%\bin\pyspark`
     - `spark.range(1, 100).collect()`
 
-You can now create a new virtual environment, and install PySpark there. It will be used for code inspection by your IDE, but due to the environment variables we've set, the configuration and JARs from your global installation will be used. 
+You can now create a new virtual environment, and install PySpark there. This will allow you to use your IDE's code inspection functionality, and to run a driver process. However, due to the environment variables that have been set, the system-wide installation of Spark will be used in local mode. 
 
 To configure Spark, create a file `%SPARK_HOME\conf\spark-defaults.conf` and add the following: 
 
@@ -81,5 +81,6 @@ I've noticed that Spark on Windows is not really a match made in heaven. I think
 1. Start with the Python devcontainer 
 2. Add Java 
 3. Add Spark 
+4. Create docker-compose file with history server and devcontainer
 
 This might be nice... don't know. 
