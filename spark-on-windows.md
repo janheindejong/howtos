@@ -2,6 +2,20 @@
 
 In this readme, I'll try to figure out how to run Spark locally, to play a bit with it. 
 
+## Simplest installation for running locally with PySpark 
+
+1. Install a supported Java version, i.e. 8/11/17
+2. Add an environment variable JAVA_HOME and point it to the installation directory of Java, or add that directory to PATH. This allows Spark to find Java, and create and communicate with JVMs  
+3. Create a new virtual environment based of one of the supported Python versions: `py -3.10 venv .venv`
+4. Activate the environment `.venv\Scripts\activate`
+5. Install PySpark: `pip install pyspark`
+6. By default, PySpark goes looking for the command `python3`, which isn't automatically created on Windows... very annoying. So, we can either set do `$env:PYSPARK_PYTHON = "python"`, or create a simlink ` New-Item -ItemType SymbolicLink -Path .\.venv\Scripts\python3.exe -Target .\.venv\Scripts\python.exe`
+7. See if everything works, by running PySpark in interactive mode:
+  - `pyspark`
+  - `spark.range(1, 100).collect()`
+
+Now, you have a fully working version of Spark, that you can use for local development, and for communicating with a cluster. Love it...
+
 ## Running on Docker 
 
 Spark depends on the JVM, spark, and setting some environment vars. However, a faster way to play around is to use a Docker image provides by the Jupyter community. 
