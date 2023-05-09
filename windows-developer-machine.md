@@ -193,9 +193,9 @@ Next, you'll want to setup git, and optionally connect it to your Windows creden
 
 ```bash 
 sudo apt update && sudo apt install git -y
-git config --global user.name <My Name>
-git config --global user.email <name@domain.com>
-git config --global credential.helper "/mnt/c/Users/<user>/scoop/apps/git/current/mingw64/bin/git-credential-manager.exe"  # This depends a bit on the version of git you have, google it 
+git config --global user.name "<FirstName LastName>"
+git config --global user.email "<address@domain.com>"
+git config --global credential.helper "/mnt/c/Users/<user>/scoop/apps/git/current/mingw64/bin/git-credential-manager.exe"  # Depends on the version of git you have, Google it 
 git config --global credential.https://dev.azure.com.useHttpPath true  # This is necessary for working with Azure DevOps based repos 
 ```
 
