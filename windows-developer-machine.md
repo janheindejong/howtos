@@ -202,22 +202,27 @@ git config --global credential.https://dev.azure.com.useHttpPath true  # This is
 You might want to install and configure Poetry for Python development.
 
 ```bash
-export POETRY_HOME="~/.local/share/pypoetry" 
+export POETRY_HOME="~/.local/share/pypoetry"  # Default value
 curl -sSL https://install.python-poetry.org | python3 -
-$POETRY_HOME/bin/poetry config virtualenvs.in-project true
 ```
 
-Add the following lines to `~/.bashrc`
+Add the following lines to `~/.bashrc`, to ensure poetry can always be found. 
 
 ```bash
 export PATH="$POETRY_HOME/bin:$PATH"
 ```
 
+I personally like it when Poetry creates the venvs in the folder of the project; this decouples the artifact (i.e. the venv) from the tool you use to make it. It's a cleaner way, that makes it more transparant and easy for other tools to understand what is going on (e.g. your IDE).
+
+```bash 
+poetry config virtualenvs.in-project true
+```
+
 Finally, if you are going to use MS Azure Artifacts, you'll need to configure authentication for pip. 
 
 ```bash
-$POETRY_HOME/venv/bin/pip install keyring artifacts-keyring
-sudo apt update &&   sudo apt install -y dotnet-sdk-6.0
+sudo apt update && sudo apt install -y dotnet-sdk-6.0
+poetry self add keyring artifacts-keyring
 ```
 
 Now, you should be all good to go for developing Python on WSL through VSCode! 
