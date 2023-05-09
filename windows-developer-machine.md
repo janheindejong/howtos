@@ -174,3 +174,50 @@ Again, I prefer installing these in the project environment as dev dependencies 
 poetry add -G dev autoflake8 flake8 isort mypy black pytest
 ```
 
+## WSL 
+
+To setup a Linux based development experience on Windows, you can use VSCode and WSL. To do this: 
+
+1. Install WSL, and a distro of your liking (e.g. Ubuntu)
+2. Install VSCode, and the VSCode WSL plugin 
+3. Run `code .` from a folder in a WSL terminal
+
+You'll probably want to upgrade your distro.
+
+```bash
+sudo apt update && sudo apt upgrade -y
+sudo apt do-release-upgrade 
+```
+
+Next, you'll want to setup git, and optionally connect it to your Windows credential manager: 
+
+```bash 
+sudo apt update && sudo apt install git -y
+git config --global user.name <My Name>
+git config --global user.email <name@domain.com>
+git config --global credential.helper "/mnt/c/Users/<user>/scoop/apps/git/current/mingw64/bin/git-credential-manager.exe"  # This depends a bit on the version of git you have, google it 
+git config --global credential.https://dev.azure.com.useHttpPath true  # This is necessary for working with Azure DevOps based repos 
+```
+
+You might want to install and configure Poetry for Python development.
+
+```bash
+export POETRY_HOME="~/.local/share/pypoetry" 
+curl -sSL https://install.python-poetry.org | python3 -
+$POETRY_HOME/bin/poetry config virtualenvs.in-project true
+```
+
+Add the following lines to `~/.bashrc`
+
+```bash
+export PATH="$POETRY_HOME/bin:$PATH"
+```
+
+Finally, if you are going to use MS Azure Artifacts, you'll need to configure authentication for pip. 
+
+```bash
+$POETRY_HOME/venv/bin/pip install keyring artifacts-keyring
+sudo apt update &&   sudo apt install -y dotnet-sdk-6.0
+```
+
+Now, you should be all good to go for developing Python on WSL through VSCode! 
