@@ -222,7 +222,7 @@ Finally, if you are going to use MS Azure Artifacts, you'll need to configure au
 
 ```bash
 sudo apt update && sudo apt install -y dotnet-sdk-6.0
-poetry self add keyring artifacts-keyring
+poetry self add artifacts-keyring
 ```
 
 Now, you should be all good to go for developing Python on WSL through VSCode! 
