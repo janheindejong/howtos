@@ -4,7 +4,7 @@ This How-To describes how to setup my development Windows development machine.
 
 ## Chocolatey 
 
-I install most stuff through Chocolatey or Scoop. Follow the official instructions to install them. 
+I install most stuff through Chocolatey or Scoop. Follow the official instructions to install them. I prefer Scoop (no admin privileges required), and if necessary I use Chocolatey. 
 
 ## ViM 
 
@@ -53,7 +53,6 @@ scoop install git
 git config --global credential.store=manager 
 git config --global credential.helper=manager
 ```
-
 
 ## Enable Hyper-V non-admin access
 
@@ -107,7 +106,7 @@ scoop install https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/downl
 oh-my-posh font install # Choose Meslo
 ```
 
-Set terminal to use nerdfont: 
+Open Windows Terminal settings, and add the following: 
 
 ```json 
 {
@@ -124,18 +123,11 @@ Set terminal to use nerdfont:
 }
 ```
 
-Add the following lines to `$PROFILE`: 
+Add the following lines to PowerShell profile (found at `$PROFILE`). There's many many themes for it, but I like stelbent-compact.minimal: 
 
 ```powershell
-Import-Module posh-git
-oh-my-posh init pwsh | Invoke-Expression
-$env:POSH_GIT_ENABLED = $true
-```
-
-There's many many themes for it, but I like stelbent-compact.minimal: 
-
-```powershell 
 oh-my-posh init pwsh --config $env:POSH_THEMES_PATH\stelbent-compact.minimal.omp.json | Invoke-Expression
+$env:POSH_GIT_ENABLED = $true
 ```
 
 ## Python 
@@ -226,3 +218,13 @@ poetry self add artifacts-keyring
 ```
 
 Now, you should be all good to go for developing Python on WSL through VSCode! 
+
+## PlantUML support for VSCode 
+
+You need the Java Runtime Engine installed, and the plugin in VSCode: 
+
+```powershell
+choco install javaruntime
+```
+
+Now install the VSCode extension, and you should be fine. 
