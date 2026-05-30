@@ -2,6 +2,58 @@
 
 This How-To describes how to setup my development Windows development machine. 
 
+## Ubuntu on WSL 
+
+```powershell
+# Install Ubuntu on WSL2 
+wsl --install 
+```
+
+```bash
+# Install zsh and set as default
+sudo apt update && sudo apt install -y zsh
+chsh -s $(which zsh)
+```
+
+On Windows, install the font faces from zsh and configure Windows Terminal to use it (Google). Once this is done, configure powerlevel10k theme for zsh
+
+```zsh
+# Install Powerlevel10 theme
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git \
+  ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+```
+
+Open `~/.zsrch` and change the following config: 
+
+```
+ZSH_THEME="powerlevel10k/powerlevel10k"
+```
+
+Install terminal addons: 
+
+```zsh
+# Autosuggestions (grey ghost text as you type)
+git clone https://github.com/zsh-users/zsh-autosuggestions \
+  ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
+# Syntax highlighting (red = bad command, green = valid)
+git clone https://github.com/zsh-users/zsh-syntax-highlighting \
+  ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
+sudo apt install -y fzf
+sudo apt install -y eza
+```
+
+Enable the stuff in `~/.zsrch` 
+
+```
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting fzf)
+alias ls=(eza --icons)
+alias tree(eza --icons --tree)
+```
+
+Now, you can do CTRL+T (file selector) and CTRL+R (command-history).
+
 ## Chocolatey 
 
 I install most stuff through Chocolatey or Scoop. Follow the official instructions to install them. I prefer Scoop (no admin privileges required), and if necessary I use Chocolatey. 
