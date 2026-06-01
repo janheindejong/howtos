@@ -15,7 +15,12 @@ sudo apt update && sudo apt install -y zsh
 chsh -s $(which zsh)
 ```
 
-On Windows, install the font faces from zsh and configure Windows Terminal to use it (Google). Once this is done, configure powerlevel10k theme for zsh
+```zsh
+# Install Oh-My-Zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+On Windows, install the font faces from zsh and configure Windows Terminal (& VSCode) to use it (Google). Once this is done, configure powerlevel10k theme for zsh
 
 ```zsh
 # Install Powerlevel10 theme
@@ -44,12 +49,12 @@ sudo apt install -y fzf
 sudo apt install -y eza
 ```
 
-Enable the stuff in `~/.zsrch` 
+Enable the stuff in `~/.zshrc` 
 
 ```
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting fzf)
-alias ls=(eza --icons)
-alias tree(eza --icons --tree)
+alias ls="eza --icons"
+alias tree="eza --icons --tree"
 ```
 
 Now, you can do CTRL+T (file selector) and CTRL+R (command-history).
