@@ -44,26 +44,29 @@ clone() { [ -d "$2" ] || git clone --depth=1 "$1" "$2"; }
 clone https://github.com/zsh-users/zsh-autosuggestions     "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
 clone https://github.com/zsh-users/zsh-syntax-highlighting "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
 
+say "Installing powerlevel10k"
+clone https://github.com/romkatv/powerlevel10k "$ZSH_CUSTOM/themes/powerlevel10k"
+
 say "Writing ~/.zshrc"
 if [ -f "$HOME/.zshrc" ]; then
   cp "$HOME/.zshrc" "$HOME/.zshrc.bak.$(date +%Y%m%d-%H%M%S)"
 fi
 
 cat > "$HOME/.zshrc" <<'EOF'
+# ---- powerlevel10k instant prompt (must stay at the very top) ----
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # ---- oh-my-zsh ----
 export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="robbyrussell"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 zstyle ':omz:update' mode disabled        # no update checks on every login (slow on a Pi)
 DISABLE_UNTRACKED_FILES_DIRTY="true"      # faster git prompt in big repos
 
 # zsh-syntax-highlighting must stay last
 plugins=(git sudo extract colored-man-pages zsh-autosuggestions zsh-syntax-highlighting)
 source "$ZSH/oh-my-zsh.sh"
-
-# ---- prompt: show hostname when connected over SSH, so you know you're on the Pi ----
-if [[ -n "$SSH_CONNECTION" ]]; then
-  PROMPT="%F{yellow}%n@%m%f $PROMPT"
-fi
 
 # ---- history ----
 HISTSIZE=50000
@@ -95,6 +98,9 @@ fi
 # ---- misc ----
 export EDITOR=nano
 export PATH="$HOME/.local/bin:$PATH"
+
+# ---- powerlevel10k config (run `p10k configure` to redo, or copy ~/.p10k.zsh from WSL) ----
+[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 EOF
 
 say "Setting zsh as default shell"
