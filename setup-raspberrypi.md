@@ -8,10 +8,19 @@ First, create a flash SSD using [raspberrypi.com/software](https://raspberrypi.c
 * *username*: `janhein`
 * *password*: beats me? 
 
-Next, transfer the SSD and power up the Pi. You can now find the pi on your local network, by calling: 
+Transfer the SSD to the Pi and power it up. Find the Pi on your network (ask Claudia how to do this). Once found, you can ssh to it, like so: 
 
-```powershell 
-ssh janhein@raspberrypi.local
+```zsh 
+ssh janhein@<ip-address>
 ```
 
-Note: discovery of the mDNS `raspberrypi.local` currently (Apr 2026) doesn't work from WSL. There's ways to fix it, by disabling `dnsTunneling`, but I don't want to go there just yet. For now, resolve the DNS by calling `ping -4 raspberrypi.local` in Windows Powershell, and use it instead of the hostname. 
+To make life easy, update your `/etc/hosts` file on WSL to include a record for raspberrypi.local.
+
+## Nice terminal 
+
+To have a nice terminal, like the one on WSL2, do the following: 
+
+```
+scp ~/.p10k.zsh janhein@raspberrypi.local:~
+ssh janhein@raspberrypi.local 'bash setup-zsh-on-pi.sh'
+```
