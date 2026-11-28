@@ -35,6 +35,7 @@ I've got several things running on the Pi:
 * **pihole** - DNS sinkhole
 * **defense-news** - TNO AI Nieuws Analist
 * **tailscale** - VPN
+* **personal-trainer** - app to manage my sports, with access to Garmin
 
 ## Pihole 
 
@@ -73,3 +74,11 @@ For more info, see `~/source/defense-news-feed`.
 
 Tailscale runs on my raspberry pi, making it accessible from other devices in my tailscale network. 
 For more info, see the [tailscale console](https://console.tailscale.com/admin/machines).
+
+## Personal trainer 
+
+Runs several timed and perpetual services: 
+
+* personal-trainer.service - app, listening on port 9000
+* personal-trainer-sync.service + .timer - runs every 30 minutes
+
